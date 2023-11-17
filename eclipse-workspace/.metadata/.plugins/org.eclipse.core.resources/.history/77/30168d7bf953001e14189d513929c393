@@ -1,0 +1,5 @@
+package dotlab;
+
+public class DotException {
+
+}

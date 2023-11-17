@@ -1,0 +1,46 @@
+package stacklab;
+
+import java.util.*;
+
+
+public class UndoRedoPainter extends Painter
+{
+	// Called when the user pushes the Undo button.
+	private Stack<Circle> historyStack = getHistory();
+	private Stack<Circle> undoHistory = getUndoHistory();
+	public UndoRedoPainter() {
+		setUndoButtonEnabled(false);
+		setRedoButtonEnabled(false);
+	}
+	void undo()
+	{
+		Stack<Circle> historyStack = getHistory();
+		if(!historyStack.isEmpty()) {
+			undoHistory.push(historyStack.pop());
+			repaint();
+			
+		}
+		setUndoButtonEnabled(!historyStack.isEmpty());
+		
+	}
+
+
+	// Called when the user pushes the Redo button.
+	void redo()
+	{
+		
+		if(!undoHistory.isEmpty()) {
+			Circle restored = undoHistory.pop();
+			historyStack.push(restored);
+			repaint();
+		}
+		setUndoButtonEnabled(true);
+
+	}
+	
+	
+	public static void main(String[] args)
+	{
+		new UndoRedoPainter().setVisible(true);
+	}
+}
