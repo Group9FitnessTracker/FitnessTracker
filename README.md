@@ -7,12 +7,15 @@ General Documentation:
 
 
 https://docs.djangoproject.com/en/5.1/ 
+
 Recommended: Take a look at First Steps > (“from Scratch” and “tutorial”)
 
 
 
 Installation
+
 https://docs.djangoproject.com/en/5.1/intro/install/ 
+
 Make sure to have python installed (latest version or 3.10+ should be fine)
 
 python -m pip install Django 
@@ -21,7 +24,9 @@ check its installed: python -m django --version
 
 
 Backend
+
 Data base https://docs.djangoproject.com/en/5.1/intro/tutorial02/ 
+
 Note: It comes with SQLite, we could also use a more scalable database like postgreSQL or MySQL
 
 Migrations are very powerful and let you change your models over time, as you develop your project, without the need to delete your database or tables and make new ones - it specializes in upgrading your database live, without losing data. We’ll cover them in more depth in a later part of the tutorial, but for now, remember the three-step guide to making model changes:
