@@ -1,0 +1,15 @@
+# Ignore Eclipse workspace
+eclipse-workspace/
+
+# Ignore system files
+.DS_Store
+Thumbs.db
+
+# Ignore Python and Django files
+venv/
+__pycache__/
+db.sqlite3
+*.pyc
+
+# Ignore VS Code settings (optional)
+.vscode/

@@ -1,7 +1,0 @@
-lastNodeOfTransposon.prev = firstNodeOfTransposon.prev;
-                if (firstNodeOfTransposon.prev != null) {
-                    firstNodeOfTransposon.prev.next = lastNodeOfTransposon;
-                }
-                if (current == head) {
-                    head = lastNodeOfTransposon;
-                }
