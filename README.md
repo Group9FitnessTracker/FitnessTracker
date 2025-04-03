@@ -5,7 +5,6 @@ Django installation/overview
 
 General Documentation:
 
-
 https://docs.djangoproject.com/en/5.1/ 
 
 Recommended: Take a look at First Steps > (“from Scratch” and “tutorial”)
@@ -16,51 +15,19 @@ Installation
 
 https://docs.djangoproject.com/en/5.1/intro/install/ 
 
-Make sure to have python installed (latest version or 3.10+ should be fine)
 
-python -m pip install Django 
+Steps to get it running:
+1. Clone the repo: git clone https://github.com/Group9FitnessTracker/FitnessTracker.git
+2. navigate to the project directory: cd fitnessTracker
+3. Install django and other dependecies: pip install -r requirements.txt
+4. Create a virtual environment: python -m venv venv
+5. Activate the virtual environment:
+Windows:
+venv\Scripts\activate
+Mac/Linux:
+source venv/bin/activate
 
-check its installed: python -m django --version
+Note if step 5 has a security error try running this command before rerunning the command above: Set-ExecutionPolicy Unrestricted -Scope Process
 
-
-Backend
-
-Data base https://docs.djangoproject.com/en/5.1/intro/tutorial02/ 
-
-Note: It comes with SQLite, we could also use a more scalable database like postgreSQL or MySQL
-
-Migrations are very powerful and let you change your models over time, as you develop your project, without the need to delete your database or tables and make new ones - it specializes in upgrading your database live, without losing data. We’ll cover them in more depth in a later part of the tutorial, but for now, remember the three-step guide to making model changes:
-
-Change your models (in models.py).
-
-Run python manage.py makemigrations to create migrations for those changes
-
-Run python manage.py migrate to apply those changes to the database.
-
-Creating an admin user¶
-
-First we’ll need to create a user who can login to the admin site. Run the following command:
-
-$ python manage.py createsuperuser
-
-Enter your desired username and press enter.
-
-Username: admin
-
-You will then be prompted for your desired email address:
-
-Email address: admin@example.com
-
-The final step is to enter your password. You will be asked to enter your password twice, the second time as a confirmation of the first.
-
-Our password: fitness
-
-Password: **********
-
-Password (again): *********
-
-Superuser created successfully.
-
-Front End 
-
-Creating URLs: https://docs.djangoproject.com/en/5.1/intro/tutorial03/ 
+Run the server: python manage.py runserver
+Step 6 should take you to http://127.0.0.1:8000/ which has the text "Hello, world. You're at the default page."
