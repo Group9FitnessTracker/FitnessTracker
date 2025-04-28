@@ -24,6 +24,9 @@
       background-size: cover;
       background-position: center;
     }
+    .navbar {
+            background: #ffffff !important;
+        }
     nav.navbar {
         margin-bottom: 0;
         z-index: 20;
@@ -65,7 +68,7 @@
 </head>
 <body>
     <!-- Navbar -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+<nav class="navbar navbar-expand-lg navbar-light bg-dark">
     <div class="container-fluid">
       <a class="navbar-brand" href="#">Fitness Tracker</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" 
@@ -117,13 +120,13 @@
     </div>
     <!-- Log In Button -->
     <div class="d-grid mb-3">
-      <button class="btn btn-dark">Log In</button>
+      <button class="btn btn-dark" onclick="window.location.href='/'">Log In</button>
     </div>
     <!-- Footer Links in vertical left alignment -->
 <div class="form-footer d-flex flex-column align-items-start gap-1 mb-2">
     <a href="#">Forgot password?</a>
     <a href="#">Sign up</a>
-    <a href="#" class="text-muted">Continue as guest</a>
+    <a href="{% url 'guest_home' %}" class="text-muted">Continue as guest</a>
   </div>  
   </div>
 

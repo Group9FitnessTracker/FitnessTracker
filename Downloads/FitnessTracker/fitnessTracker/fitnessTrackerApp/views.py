@@ -58,4 +58,33 @@ def diet_detail(request, diet_id):
     }
     return render(request, 'fitnessTrackerApp/diet_detail.html', context)
 
+def guest_home(request):
+    return render(request, 'fitnessTrackerApp/guest_home.html')
+
+def guest_workouts(request):
+    return render(request, 'fitnessTrackerApp/guest_workouts.html')
+
+def guest_nutrition(request):
+    return render(request, 'fitnessTrackerApp/guest_nutrition.html')
+
+def guest_workout_fullbody(request):
+    return render(request, 'fitnessTrackerApp/guest_workout_fullbody.html')
+def guest_workout_hiit(request):
+    return render(request, 'fitnessTrackerApp/guest_workout_hiit.html')
+def guest_workout_strength(request):
+    return render(request, 'fitnessTrackerApp/guest_workout_strength.html')
+def guest_nutrition_balanced(request):
+    return render(request, 'fitnessTrackerApp/guest_nutrition_balanced.html')
+def guest_nutrition_protein(request):
+    return render(request, 'fitnessTrackerApp/guest_nutrition_protein.html')
+def guest_nutrition_lowcarb(request):
+    return render(request, 'fitnessTrackerApp/guest_nutrition_lowcarb.html')
+def guest_workout_ul(request):
+    return render(request, 'fitnessTrackerApp/guest_workout_ul.html')
+def guest_workout_ppl(request):
+    return render(request, 'fitnessTrackerApp/guest_workout_ppl.html')
+
+def ai_coach(request):
+    return render(request, 'fitnessTrackerApp/ai_coach.html')
+
 

@@ -7,9 +7,11 @@ Thumbs.db
 
 # Ignore Python and Django files
 venv/
+venv
 __pycache__/
 db.sqlite3
 *.pyc
+../../../venv/
 
 # Ignore VS Code settings (optional)
 .vscode/
