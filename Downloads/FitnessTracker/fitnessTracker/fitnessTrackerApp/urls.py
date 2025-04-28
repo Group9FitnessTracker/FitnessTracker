@@ -3,8 +3,28 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    path("", views.index, name="index"),
+    path('', views.home, name='home'),
+    path("index/", views.index, name="index"),
     path("/fitnessTrackerApp/5/", views.detail, name="detail"),
     path("/fitnessTrackerApp/5/results", views.results, name="results"),
     path("/fitnessTrackerApp/5/vote/", views.vote, name="vote"),
+
+    # URLs for catalog features
+    path('workouts/', views.workout_catalog, name='workout_catalog'),
+    path('workouts/<int:workout_id>/', views.workout_detail, name='workout_detail'),
+    path('diets/', views.diet_catalog, name='diet_catalog'),
+    path('diets/<int:diet_id>/', views.diet_detail, name='diet_detail'),
+
+    path('guest_home/', views.guest_home, name='guest_home'),
+    path('guest_workouts/', views.guest_workouts, name='guest_workouts'),
+    path('guest_nutrition/', views.guest_nutrition, name='guest_nutrition'),
+    path('guest_workout_fullbody/', views.guest_workout_fullbody, name='guest_workout_fullbody'),
+    path('guest_workout_hiit/', views.guest_workout_hiit, name='guest_workout_hiit'),
+    path('guest_workout_strength/', views.guest_workout_strength, name='guest_workout_strength'),
+    path('guest_nutrition_balanced/', views.guest_nutrition_balanced, name='guest_nutrition_balanced'),
+    path('guest_nutrition_protein/', views.guest_nutrition_protein, name='guest_nutrition_protein'),
+    path('guest_nutrition_lowcarb/', views.guest_nutrition_lowcarb, name='guest_nutrition_lowcarb'),
+    path('guest_workout_ul/', views.guest_workout_ul, name='guest_workout_ul'),
+    path('guest_workout_ppl/', views.guest_workout_ppl, name='guest_workout_ppl'),
+    path('ai_coach/', views.ai_coach, name='ai_coach'),
 ]
