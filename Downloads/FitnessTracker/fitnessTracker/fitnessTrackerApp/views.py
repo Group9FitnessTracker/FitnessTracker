@@ -1,5 +1,30 @@
 from django.http import HttpResponse
-from django.shortcuts import render
+from django.contrib.auth.models import User
+from django.contrib import messages
+from .forms import CreateAccountForm
+from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth import authenticate, login
+import re
+from django.core.validators import validate_email
+from django.core.exceptions import ValidationError
+
+def login_view(request):
+    if request.method == 'POST':
+        username = request.POST['username']
+        password = request.POST['password']
+        
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            login(request, user)
+            return redirect('dashboard')  # after successful login
+        else:
+            messages.error(request, "Invalid username or password.")
+            return render(request, 'fitnessTrackerApp/home.html')  # back to login page!
+    else:
+        return render(request, 'fitnessTrackerApp/home.html')
+
+
 
 def home(request):
     return render(request, 'fitnessTrackerApp/home.html')
@@ -86,5 +111,67 @@ def guest_workout_ppl(request):
 
 def ai_coach(request):
     return render(request, 'fitnessTrackerApp/ai_coach.html')
+def create_account(request):
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        email = request.POST.get('email')
+        password = request.POST.get('password')
+        confirm_password = request.POST.get('confirm_password')
+        phone_number = request.POST.get('phone_number')
+
+        # Username length check
+        if len(username) < 4:
+            messages.error(request, 'Username too short. Must be at least 4 characters.')
+            return redirect('create_account')
+
+        # Password strength check
+        if len(password) < 6:
+            messages.error(request, 'Password too weak. Must be at least 6 characters.')
+            return redirect('create_account')
+
+        # Password match check
+        if password != confirm_password:
+            messages.error(request, 'Passwords do not match.')
+            return redirect('create_account')
+
+        # Phone number: clean non-digit characters
+        cleaned_phone = re.sub(r'\D', '', phone_number)
+        if not re.fullmatch(r'\d{10,15}', cleaned_phone):
+            messages.error(request, 'Invalid phone number. Must be 10-15 digits after removing dashes and spaces.')
+            return redirect('create_account')
+
+        # Email validity check
+        try:
+            validate_email(email)
+        except ValidationError:
+            messages.error(request, 'Invalid email.')
+            return redirect('create_account')
+
+        # Username already exists
+        if User.objects.filter(username=username).exists():
+            messages.error(request, 'Username already exists. Please choose another one.')
+            return redirect('create_account')
+
+        # Email already exists
+        if User.objects.filter(email=email).exists():
+            messages.error(request, 'Email already registered. Please use another email.')
+            return redirect('create_account')
+
+        # Create the user
+        user = User.objects.create_user(username=username, email=email, password=password)
+        user.save()
+
+        # Optionally you could save cleaned_phone into a future profile model here
+
+        messages.success(request, 'Account created successfully! Please log in.')
+        return redirect('/')
+
+    return render(request, 'fitnessTrackerApp/create_account.html')
+
+
+@login_required(login_url='/')  # Redirects to login page if user is not logged in
+def dashboard(request):
+    return render(request, 'fitnessTrackerApp/dashboard.html')
+
 
 

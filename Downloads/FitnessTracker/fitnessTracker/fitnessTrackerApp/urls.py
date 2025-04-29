@@ -27,4 +27,9 @@ urlpatterns = [
     path('guest_workout_ul/', views.guest_workout_ul, name='guest_workout_ul'),
     path('guest_workout_ppl/', views.guest_workout_ppl, name='guest_workout_ppl'),
     path('ai_coach/', views.ai_coach, name='ai_coach'),
+    path('create_account/', views.create_account, name='create_account'),
+    path('dashboard/', views.dashboard, name='dashboard'),
+    path('login/', views.login_view, name='login'),
+
+
 ]
