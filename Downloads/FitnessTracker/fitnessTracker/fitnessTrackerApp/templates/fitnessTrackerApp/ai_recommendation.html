@@ -1,0 +1,142 @@
+<!-- ai_recommendation.html -->
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>AI Coach - Your Plan</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(135deg, #aed8ff 0%, #43c6ac 100%);
+            min-height: 100vh;
+            font-family: 'Helvetica', Arial, sans-serif;
+        }
+        .navbar {
+            background: #fff !important;
+        }
+        .navbar-brand {
+            font-weight: 900;
+            font-size: 1.5rem;
+            color: #222831 !important;
+        }
+        .nav-link, .login-circle {
+            color: #222831 !important;
+            font-weight: 500;
+        }
+        .login-circle {
+            border-radius: 2rem;
+            padding: 0.5rem 1.5rem;
+            background: linear-gradient(90deg, #191654 0%, #43c6ac 100%);
+            color: #fff !important;
+            font-weight: 700;
+        }
+        .login-circle:hover {
+            background: linear-gradient(90deg, #43c6ac 0%, #191654 100%);
+        }
+        .ai-section {
+            margin-top: 4rem;
+            margin-bottom: 4rem;
+        }
+        .ai-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #fff;
+            margin-bottom: 1.5rem;
+        }
+        .ai-desc {
+            font-size: 1.2rem;
+            color: #fff;
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 1.5rem;
+            border-radius: 1rem;
+            white-space: pre-line;
+        }
+        .error-container {
+            background-color: rgba(220, 53, 69, 0.9);
+            color: #fff;
+            padding: 1.5rem;
+            border-radius: 1rem;
+            margin-bottom: 2rem;
+            text-align: left;
+        }
+        .error-title {
+            font-weight: 700;
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+        }
+        .error-details {
+            font-family: monospace;
+            background-color: rgba(0, 0, 0, 0.2);
+            padding: 0.75rem;
+            border-radius: 0.5rem;
+            overflow-x: auto;
+        }
+        .user-info {
+            background-color: rgba(255, 255, 255, 0.2);
+            color: #fff;
+            padding: 1rem;
+            border-radius: 1rem;
+            margin-bottom: 2rem;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">
+            <span>Fitness</span>
+            <span>Tracker</span>
+        </a>
+        <div class="collapse navbar-collapse">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item"><a class="nav-link active" href="{% url 'guest_home' %}">Home</a></li>
+                <li class="nav-item"><a class="nav-link" href="#">About</a></li>
+            </ul>
+            <a href="/" class="login-circle">Login</a>
+        </div>
+    </div>
+</nav>
+
+<div class="container ai-section">
+    <div class="row justify-content-center">
+        <div class="col-md-10">
+            <!-- User input summary -->
+            <div class="user-info">
+                <h4>Your Information</h4>
+                <p><strong>Fitness Goal:</strong> {{ user_goal }}</p>
+                <p><strong>Experience Level:</strong> {{ user_experience }}</p>
+                <p><strong>Dietary Preferences:</strong> {{ user_preferences }}</p>
+            </div>
+            
+            <!-- Error display section -->
+            {% if error_occurred %}
+            <div class="error-container">
+                <div class="error-title">We encountered an issue generating your custom plan</div>
+                <p>We've provided a basic plan below instead.</p>
+                <div class="error-details">
+                    {{ error_details }}
+                </div>
+            </div>
+            {% endif %}
+            
+            <!-- Plan display -->
+            <div class="text-center">
+                <div class="ai-title">Your Generated Plan</div>
+                <div class="ai-desc">{{ generated_plan|linebreaksbr }}</div>
+            </div>
+            
+            <!-- Buttons -->
+            <div class="text-center mt-4">
+                <a href="{% url 'ai_question' %}" class="btn login-circle me-2">Create a New Plan</a>
+                <a href="{% url 'guest_home' %}" class="btn btn-light">Back to Home</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

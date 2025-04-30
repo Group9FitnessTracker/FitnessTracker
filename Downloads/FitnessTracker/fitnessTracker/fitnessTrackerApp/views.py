@@ -8,6 +8,8 @@ from django.contrib.auth import authenticate, login
 import re
 from django.core.validators import validate_email
 from django.core.exceptions import ValidationError
+from huggingface_hub import InferenceClient
+from django.conf import settings
 
 def login_view(request):
     if request.method == 'POST':
@@ -111,6 +113,65 @@ def guest_workout_ppl(request):
 
 def ai_coach(request):
     return render(request, 'fitnessTrackerApp/ai_coach.html')
+
+def ai_question(request):
+    if request.method == 'POST':
+        goal = request.POST.get('goal')
+        experience = request.POST.get('experience')
+        preferences = request.POST.get('preferences')
+
+        if goal and experience and preferences:
+            request.session['goal'] = goal
+            request.session['experience'] = experience
+            request.session['preferences'] = preferences
+            return redirect('ai_recommendation')  # This is the key line
+    return render(request, 'fitnessTrackerApp/ai_question.html')
+
+def ai_recommendation(request):
+    # Get user inputs from session
+    goal = request.session.get('goal', '')
+    experience = request.session.get('experience', '')
+    preferences = request.session.get('preferences', '')
+
+    # Redirect if any input is missing
+    if not (goal and experience and preferences):
+        return redirect('ai_question')
+
+    # Compose the prompt
+    prompt = f"Create a personalized fitness plan for someone with the goal: {goal}, experience level: {experience}, and preferences: {preferences}."
+
+    generated_plan = ""
+    error_message = ""
+
+    try:
+        # Initialize Hugging Face client
+        client = InferenceClient(
+            model="mistralai/Mistral-7B-Instruct-v0.1",
+            token=settings.HF_API_KEY
+        )
+
+        # Generate response
+        response = client.text_generation(prompt, max_new_tokens=200)
+        generated_plan = response.strip()
+
+    except Exception as e:
+        error_message = f"There was an error: {str(e)}"
+
+    # Prepare context
+    context = {
+        'generated_plan': generated_plan if generated_plan else "No plan generated.",
+        'user_goal': goal,
+        'user_experience': experience,
+        'user_preferences': preferences,
+        'error_occurred': bool(error_message),
+        'error_details': error_message
+    }
+
+    return render(request, 'fitnessTrackerApp/ai_recommendation.html', context)
+
+
+
+
 def create_account(request):
     if request.method == 'POST':
         username = request.POST.get('username')

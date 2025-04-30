@@ -3,7 +3,7 @@
 {% load static %}
 <head>
     <meta charset="UTF-8">
-    <title>AI Coach - Fitness Tracker</title>
+    <title>Your Generated Plan</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
@@ -14,7 +14,6 @@
         }
         .navbar {
             background: #fff !important;
-            font-family: 'Helvetica', Arial, sans-serif;
         }
         .navbar-brand, .navbar-nav, .nav-link, .login-circle {
             font-family: 'Helvetica', Arial, sans-serif !important;
@@ -66,12 +65,6 @@
         .ai-desc {
             font-size: 1.2rem;
             color: #fff;
-            margin-bottom: 2.5rem;
-        }
-        .ai-img {
-            max-width: 320px;
-            border-radius: 1rem;
-            box-shadow: 0 4px 20px rgba(67,198,172,0.15);
         }
         .btn-fitness {
             background: linear-gradient(90deg, #43c6ac 0%, #191654 100%);
@@ -109,20 +102,37 @@
         </div>
     </div>
 </nav>
+
 <div class="container ai-section">
     <div class="row align-items-center justify-content-center">
-        <div class="col-md-6 text-center text-md-start mb-4 mb-md-0">
-            <div class="ai-title">AI COACH</div>
-            <div class="ai-desc">
-                Meet your personal AI Coach! The AI Coach analyzes your fitness goals, preferences, and current level to generate a personalized workout and nutritional plan just for you. Whether you want to build muscle, lose weight, or simply get healthier, the AI Coach adapts to your needs and helps you stay on track with smart, science-backed recommendations.
-            </div>
-            <a href="{% url 'ai_question' %}" class="btn btn-fitness">Generate Workout and Nutritional Plan</a>
-        </div>
-        <div class="col-md-6 text-center">
-            <img src="{% static 'fitnessTrackerApp/images/ai.png' %}" alt="AI Coach" class="ai-img">
+        <div class="col-md-10 text-center">
+            <div class="ai-title">Before we create your plan, answer the following questions:</div>
+            <form method="post" action="{% url 'ai_question' %}" class="mt-4">
+                {% csrf_token %}
+                
+                <div class="mb-4 text-start">
+                    <label for="goal" class="form-label text-white fw-bold">1. What is your fitness goal?</label>
+                    <input type="text" class="form-control" id="goal" name="goal" required placeholder="e.g., Lose weight, Build muscle">
+                </div>
+            
+                <div class="mb-4 text-start">
+                    <label for="experience" class="form-label text-white fw-bold">2. What is your current experience level?</label>
+                    <input type="text" class="form-control" id="experience" name="experience" required placeholder="e.g., Beginner, Intermediate, Advanced">
+                </div>
+            
+                <div class="mb-4 text-start">
+                    <label for="preferences" class="form-label text-white fw-bold">3. Do you have any dietary preferences or restrictions?</label>
+                    <input type="text" class="form-control" id="preferences" name="preferences" required placeholder="e.g., Vegan, Gluten-free, No dairy">
+                </div>
+            
+                <button type="submit" class="btn btn-fitness mt-3">Generate Workout and Nutritional Plan</button>
+            </form>
+            
         </div>
     </div>
 </div>
+
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
-</html> 
+</html>
