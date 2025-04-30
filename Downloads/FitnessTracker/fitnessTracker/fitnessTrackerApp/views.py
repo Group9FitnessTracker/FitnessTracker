@@ -169,9 +169,6 @@ def ai_recommendation(request):
 
     return render(request, 'fitnessTrackerApp/ai_recommendation.html', context)
 
-
-
-
 def create_account(request):
     if request.method == 'POST':
         username = request.POST.get('username')
