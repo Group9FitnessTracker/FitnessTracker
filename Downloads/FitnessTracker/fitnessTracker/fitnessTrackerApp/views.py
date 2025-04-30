@@ -8,6 +8,51 @@ from django.contrib.auth import authenticate, login
 import re
 from django.core.validators import validate_email
 from django.core.exceptions import ValidationError
+from .models import UserProfile
+
+@login_required(login_url='/')
+def profile_view(request):
+    profile, _ = UserProfile.objects.get_or_create(user=request.user)
+    return render(request, 'fitnessTrackerApp/profile.html', {'profile': profile})
+
+@login_required(login_url='/')
+def edit_profile(request):
+    profile, _ = UserProfile.objects.get_or_create(user=request.user)
+
+    if request.method == 'POST':
+        weight = request.POST.get('weight')
+        height = request.POST.get('height')
+        age = request.POST.get('age')
+        gender = request.POST.get('gender')
+
+        try:
+            weight = float(weight)
+            height = float(height)
+            age = int(age)
+
+            if weight <= 0:
+                messages.error(request, "Invalid weight")
+            elif height <= 0:
+                messages.error(request, "Invalid height")
+            elif age <= 0:
+                messages.error(request, "Invalid age")
+            elif gender not in ['male', 'female', 'nonbinary']:
+                messages.error(request, "Invalid gender")
+            else:
+                profile.weight = weight
+                profile.height = height
+                profile.age = age
+                profile.gender = gender
+                profile.save()
+                messages.success(request, "Profile updated successfully!")
+                return redirect('profile_view')
+
+        except ValueError:
+            messages.error(request, "Please enter valid numeric values.")
+
+    return render(request, 'fitnessTrackerApp/edit_profile.html', {'profile': profile})
+
+
 
 def login_view(request):
     if request.method == 'POST':
