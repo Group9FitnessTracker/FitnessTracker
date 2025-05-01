@@ -10,6 +10,7 @@ from django.core.validators import validate_email
 from django.core.exceptions import ValidationError
 from .models import UserProfile
 
+
 @login_required(login_url='/')
 def profile_view(request):
     profile, _ = UserProfile.objects.get_or_create(user=request.user)

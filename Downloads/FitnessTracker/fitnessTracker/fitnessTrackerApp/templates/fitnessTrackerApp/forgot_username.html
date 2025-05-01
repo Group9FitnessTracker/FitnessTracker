@@ -1,0 +1,26 @@
+{% extends "fitnessTrackerApp/base_generic.html" %}
+{% block content %}
+<div class="container d-flex justify-content-center align-items-center" style="min-height: 100vh;">
+  <div class="bg-white p-4 rounded shadow" style="max-width: 500px; width: 100%;">
+    <h2 class="mb-3 text-center text-dark">Forgot Username?</h2>
+    <p class="text-dark text-center mb-4">Enter your email and we'll send your username to your inbox.</p>
+
+    {% if messages %}
+      {% for message in messages %}
+        <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+      {% endfor %}
+    {% endif %}
+
+    <form method="POST">
+      {% csrf_token %}
+      <div class="mb-3">
+        <label for="email" class="form-label text-dark">Email Address</label>
+        <input type="email" class="form-control" name="email" id="email" placeholder="Enter your email" required>
+      </div>
+      <div class="d-grid">
+        <button type="submit" class="btn btn-dark">Send Username</button>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}
