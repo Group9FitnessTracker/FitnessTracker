@@ -141,15 +141,25 @@ def ai_recommendation(request):
 
     # Create prompt for Gemini
     prompt = (
-        f"Create a 7-day personalized fitness plan for someone with the goal: {goal}, "
-        f"experience level: {experience}, and preferences: {preferences}. "
-        "Each day should include:\n"
-        "- A workout routine\n"
-        "- A unique meal plan (different from other days)\n\n"
-        "Format each day like this:\n"
-        "Day 1:\nWorkout: ...\nDiet: ...\n\n"
-        "Make each day's plan clear and separated with double line breaks."
-    )
+    f"Create a 7-day personalized fitness plan for someone with the goal: {goal}, "
+    f"experience level: {experience}, and preferences: {preferences}. "
+    "Each day should include:\n"
+    "- 3 distinct workout sessions (e.g., morning, afternoon, evening)\n"
+    "- 3 unique meals (breakfast, lunch, dinner), different from other days\n\n"
+    "Format each day like this:\n"
+    "Workouts:\n"
+    "- Morning: ...\n"
+    "- Afternoon: ...\n"
+    "- Evening: ...\n"
+    "Meals:\n"
+    "- Breakfast: ...\n"
+    "- Lunch: ...\n"
+    "- Dinner: ...\n"
+    "###ENDDAY###\n\n"
+    "Repeat for 7 days, using ###ENDDAY### after each day's content. Do not include any introductory paragraph or 'Day X' labels."
+)
+
+
 
     generated_plan = ""
     error_message = ""
@@ -171,7 +181,10 @@ def ai_recommendation(request):
 
         # Extract generated text
         generated_plan = result['candidates'][0]['content']['parts'][0]['text'].strip()
-        days = generated_plan.split("\n\n")
+        days = [d.strip() for d in generated_plan.split("###ENDDAY###") if d.strip()]
+        days = [f"Day {i + 1}\n\n{d}" for i, d in enumerate(days)]
+
+
 
     except Exception as e:
         error_message = f"There was an error: {str(e)}"

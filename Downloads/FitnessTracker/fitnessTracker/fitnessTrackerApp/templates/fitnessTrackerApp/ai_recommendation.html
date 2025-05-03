@@ -81,14 +81,43 @@
             margin-bottom: 2rem;
             text-align: left;
         }
-        .day-block {
-            background-color: rgba(255, 255, 255, 0.2);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            border-radius: 1rem;
-            padding: 1.25rem;
-            color: #fff;
-            white-space: pre-wrap;
+        .day-content {
+    white-space: pre-wrap;       /* Wraps text and preserves line breaks */
+    word-break: break-word;      /* Breaks long words */
+    overflow-wrap: break-word;
+    overflow-x: hidden;          /* Prevents horizontal scrolling */
+    font-size: 1rem;
+    color: #ffffff;
+    margin: 0;
+    padding: 0;
+    font-family: inherit;
 }
+
+.day-block {
+    background-color: rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 1rem;
+    padding: 1.5rem;
+    color: #fff;
+    text-align: left;
+    overflow-x: hidden;      /* Ensures container doesn’t scroll horizontally */
+    box-sizing: border-box;
+    max-width: 100%;
+}
+
+
+.day-title {
+    text-align: center;
+    font-size: 1.75rem;
+    font-weight: 800;
+    color: #ffffff;
+    margin-bottom: 1rem;
+}
+
+
+
+
+
 
 </style>
 </head>
@@ -134,14 +163,15 @@
             <div class="text-center">
                 <div class="ai-title">Your Generated Plan</div>
               
-                {% for day in days|slice:":7" %}
-                  {% if day and day.strip %}
-                  <div class="day-block mb-4">
-                    <h5 class="fw-bold text-primary">Day {{ forloop.counter }}</h5>
-                    <pre class="mb-0">{{ day }}</pre>
-                  </div>
-                  {% endif %}
-                {% endfor %}
+{% for day in days %}
+  {% if day %}
+    <div class="day-block mb-4">
+        <pre>{{ day }}</pre>
+    </div>
+  {% endif %}
+{% endfor %}
+
+              
               </div>
 
 <!-- Buttons -->
