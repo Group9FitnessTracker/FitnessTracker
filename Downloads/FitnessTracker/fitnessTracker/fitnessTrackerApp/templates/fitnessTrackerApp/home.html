@@ -104,6 +104,13 @@
 
   <!-- Overlay -->
   <div class="overlay"></div>
+  {% if account_created %}
+  <div class="alert alert-success alert-dismissible fade show" role="alert">
+    Account created successfully! Please log in.
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+{% endif %}
+
 
   <!-- Login Form -->
 <div class="login-container">

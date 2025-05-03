@@ -13,9 +13,13 @@ db.sqlite3
 *.pyc
 ../../../venv/
 
-# Ignore VS Code settings (optional)
+# Ignore VS Code settings
 .vscode/
 
+<<<<<<< Updated upstream
 
 # Ignore local database
 db.sqlite3
+=======
+.env
+>>>>>>> Stashed changes

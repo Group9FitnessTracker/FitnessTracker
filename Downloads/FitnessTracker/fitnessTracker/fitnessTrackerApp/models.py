@@ -12,9 +12,12 @@ class UserProfile(models.Model):
         ('female', 'Female'),
         ('nonbinary', 'Non-binary')
     ], null=True, blank=True)
+    goal = models.CharField(max_length=100, null=True, blank=True)
+    activity_level = models.CharField(max_length=100, null=True, blank=True)
 
     def __str__(self):
         return f"{self.user.username}'s Profile"
+
 
 
 class Question(models.Model):

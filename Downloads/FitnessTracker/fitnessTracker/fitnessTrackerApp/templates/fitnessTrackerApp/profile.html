@@ -103,6 +103,18 @@
       <li class="list-group-item"><strong>Height:</strong> {{ profile.height }} cm</li>
       <li class="list-group-item"><strong>Age:</strong> {{ profile.age }}</li>
       <li class="list-group-item"><strong>Gender:</strong> {{ profile.gender }}</li>
+      <li class="list-group-item"><strong>Fitness Goal:</strong>
+        {% if profile.goal == "lose_weight" %}Lose Weight
+        {% elif profile.goal == "build_muscle" %}Build Muscle
+        {% elif profile.goal == "general_health" %}General Health
+        {% else %}Not specified{% endif %}
+      </li>
+      <li class="list-group-item"><strong>Activity Level:</strong>
+        {% if profile.activity_level == "low" %}Low
+        {% elif profile.activity_level == "moderate" %}Moderate
+        {% elif profile.activity_level == "high" %}High
+        {% else %}Not specified{% endif %}
+      </li>
     </ul>
     <div class="text-center">
       <a href="{% url 'edit_profile' %}" class="btn btn-edit">Edit Profile</a>
