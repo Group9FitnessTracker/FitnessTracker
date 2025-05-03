@@ -15,3 +15,7 @@ db.sqlite3
 
 # Ignore VS Code settings (optional)
 .vscode/
+
+
+# Ignore local database
+db.sqlite3

@@ -4,7 +4,7 @@ from django.contrib import messages
 from .forms import CreateAccountForm
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 import re
 from django.core.validators import validate_email
 from django.core.exceptions import ValidationError
@@ -70,7 +70,9 @@ def login_view(request):
     else:
         return render(request, 'fitnessTrackerApp/home.html')
 
-
+def logout_view(request):
+    logout(request)
+    return redirect('login')
 
 def home(request):
     return render(request, 'fitnessTrackerApp/home.html')
