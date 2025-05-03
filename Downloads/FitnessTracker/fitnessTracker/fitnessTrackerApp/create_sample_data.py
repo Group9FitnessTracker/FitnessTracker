@@ -7,14 +7,11 @@ class Command(BaseCommand):
     def handle(self, *args, **kwargs):
         self.stdout.write('Creating sample workout and diet plans...')
         
-        # Delete existing data (optional - remove if you want to keep existing data)
         WorkoutPlan.objects.all().delete()
         DietPlan.objects.all().delete()
         
-        # Create workout plans - limited to 2 samples
         self.create_workout_plans()
-        
-        # Create diet plans - limited to 2 samples
+
         self.create_diet_plans()
         
         self.stdout.write(self.style.SUCCESS('Successfully created sample data!'))
@@ -29,7 +26,6 @@ class Command(BaseCommand):
             category="strength"
         )
         
-        # Add exercises to the full body workout
         exercises = [
             {
                 "name": "Bodyweight Squats",
@@ -109,7 +105,6 @@ class Command(BaseCommand):
             category="balanced"
         )
         
-        # Add meals to balanced plan
         balanced_meals = [
             {
                 "name": "Breakfast",
@@ -148,7 +143,6 @@ class Command(BaseCommand):
             category="protein"
         )
         
-        # Add meals to protein plan
         protein_meals = [
             {
                 "name": "Breakfast",
