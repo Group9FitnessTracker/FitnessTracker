@@ -8,13 +8,25 @@ from django.contrib.auth import authenticate, login
 import re
 from django.core.validators import validate_email
 from django.core.exceptions import ValidationError
-from .models import UserProfile
+from django.db import IntegrityError
+from .models import (
+    UserProfile, WorkoutPlan, DietPlan, 
+    UserWorkoutPlan, UserDietPlan
+)
 
 
 @login_required(login_url='/')
 def profile_view(request):
     profile, _ = UserProfile.objects.get_or_create(user=request.user)
-    return render(request, 'fitnessTrackerApp/profile.html', {'profile': profile})
+    saved_workouts = UserWorkoutPlan.objects.filter(user=request.user).select_related('workout_plan')
+    saved_diets = UserDietPlan.objects.filter(user=request.user).select_related('diet_plan')
+    
+    context = {
+        'profile': profile,
+        'saved_workouts': saved_workouts,
+        'saved_diets': saved_diets
+    }
+    return render(request, 'fitnessTrackerApp/profile.html', context)
 
 @login_required(login_url='/')
 def edit_profile(request):
@@ -92,42 +104,150 @@ def vote(request, question_id):
 
 
 
-# views for workout and diet catalogs
+# Views for workout and diet catalogs
 def workout_catalog(request):
     workouts = WorkoutPlan.objects.all().order_by('difficulty_level', 'name')
+    
+    # cChecks the workout plans that a user has 
+    user_saved_workout_ids = []
+    if request.user.is_authenticated:
+        user_saved_workout_ids = UserWorkoutPlan.objects.filter(
+            user=request.user
+        ).values_list('workout_plan_id', flat=True)
+    
     context = {
         'workouts': workouts,
-        'title': 'Browse Workout Plans'
+        'title': 'Browse Workout Plans',
+        'user_saved_workout_ids': user_saved_workout_ids
     }
     return render(request, 'fitnessTrackerApp/workout_catalog.html', context)
 
 def workout_detail(request, workout_id):
     workout = get_object_or_404(WorkoutPlan, pk=workout_id)
     exercises = workout.exercises.all().order_by('order')
+    
+    # Makes sure user has workout plans 
+    is_saved = False
+    if request.user.is_authenticated:
+        is_saved = UserWorkoutPlan.objects.filter(
+            user=request.user, 
+            workout_plan=workout
+        ).exists()
+    
     context = {
         'workout': workout,
         'exercises': exercises,
-        'title': workout.name
+        'title': workout.name,
+        'is_saved': is_saved
     }
     return render(request, 'fitnessTrackerApp/workout_detail.html', context)
 
+@login_required(login_url='/')
+def save_workout(request, workout_id):
+    workout = get_object_or_404(WorkoutPlan, pk=workout_id)
+    notes = request.POST.get('notes', '')
+    
+    # Makes sure user does not add the same workout plan
+    try:
+        # Make plans a part of a user
+        UserWorkoutPlan.objects.create(
+            user=request.user,
+            workout_plan=workout,
+            notes=notes
+        )
+        messages.success(request, f"'{workout.name}' has been saved to your account!")
+    except IntegrityError:
+        messages.info(request, "You've already saved this workout plan.")
+    
+    return redirect('workout_detail', workout_id=workout_id)
+
+@login_required(login_url='/')
+def remove_workout(request, workout_id):
+    workout = get_object_or_404(WorkoutPlan, pk=workout_id)
+    
+    UserWorkoutPlan.objects.filter(
+        user=request.user,
+        workout_plan=workout
+    ).delete()
+    
+    messages.success(request, f"'{workout.name}' has been removed from your saved workouts.")
+    
+    next_page = request.GET.get('next', 'profile_view')
+    if next_page == 'detail':
+        return redirect('workout_detail', workout_id=workout_id)
+    return redirect('profile_view')
+
 def diet_catalog(request):
     diets = DietPlan.objects.all().order_by('category', 'name')
+    
+    # Checks the diet plans that a user has 
+    user_saved_diet_ids = []
+    if request.user.is_authenticated:
+        user_saved_diet_ids = UserDietPlan.objects.filter(
+            user=request.user
+        ).values_list('diet_plan_id', flat=True)
+    
     context = {
         'diets': diets,
-        'title': 'Browse Diet Plans'
+        'title': 'Browse Diet Plans',
+        'user_saved_diet_ids': user_saved_diet_ids
     }
     return render(request, 'fitnessTrackerApp/diet_catalog.html', context)
 
 def diet_detail(request, diet_id):
     diet = get_object_or_404(DietPlan, pk=diet_id)
     meals = diet.meals.all()
+    
+    # Makes sure user has diet plans 
+    is_saved = False
+    if request.user.is_authenticated:
+        is_saved = UserDietPlan.objects.filter(
+            user=request.user, 
+            diet_plan=diet
+        ).exists()
+    
     context = {
         'diet': diet,
         'meals': meals,
-        'title': diet.name
+        'title': diet.name,
+        'is_saved': is_saved
     }
     return render(request, 'fitnessTrackerApp/diet_detail.html', context)
+
+@login_required(login_url='/')
+def save_diet(request, diet_id):
+    diet = get_object_or_404(DietPlan, pk=diet_id)
+    notes = request.POST.get('notes', '')
+    
+    # Makes sure user does not add the same workout plan
+    try:
+        # Make plans a part of a user
+        UserDietPlan.objects.create(
+            user=request.user,
+            diet_plan=diet,
+            notes=notes
+        )
+        messages.success(request, f"'{diet.name}' has been saved to your account!")
+    except IntegrityError:
+        messages.info(request, "You've already saved this diet plan.")
+    
+    return redirect('diet_detail', diet_id=diet_id)
+
+@login_required(login_url='/')
+def remove_diet(request, diet_id):
+    diet = get_object_or_404(DietPlan, pk=diet_id)
+    
+    UserDietPlan.objects.filter(
+        user=request.user,
+        diet_plan=diet
+    ).delete()
+    
+    messages.success(request, f"'{diet.name}' has been removed from your saved diets.")
+    
+    next_page = request.GET.get('next', 'profile_view')
+    if next_page == 'detail':
+        return redirect('diet_detail', diet_id=diet_id)
+    return redirect('profile_view')
 
 def guest_home(request):
     return render(request, 'fitnessTrackerApp/guest_home.html')
@@ -207,7 +327,8 @@ def create_account(request):
         user = User.objects.create_user(username=username, email=email, password=password)
         user.save()
 
-        # Optionally you could save cleaned_phone into a future profile model here
+        # Create a user profile
+        UserProfile.objects.create(user=user)
 
         messages.success(request, 'Account created successfully! Please log in.')
         return redirect('/')
@@ -217,7 +338,51 @@ def create_account(request):
 
 @login_required(login_url='/')  # Redirects to login page if user is not logged in
 def dashboard(request):
-    return render(request, 'fitnessTrackerApp/dashboard.html')
+    saved_workouts = UserWorkoutPlan.objects.filter(user=request.user).select_related('workout_plan')
+    saved_diets = UserDietPlan.objects.filter(user=request.user).select_related('diet_plan')
+    
+    context = {
+        'saved_workouts': saved_workouts,
+        'saved_diets': saved_diets
+    }
+    return render(request, 'fitnessTrackerApp/dashboard.html', context)
 
 
+@login_required(login_url='/')
+def add_plans(request):
+    """
+    View function for the add plans page that displays available workout
+    and diet plans for users to save to their account.
+    """
+    workouts = WorkoutPlan.objects.all().order_by('difficulty_level', 'name')
+    diets = DietPlan.objects.all().order_by('category', 'name')
+    
+    user_saved_workout_ids = UserWorkoutPlan.objects.filter(
+        user=request.user
+    ).values_list('workout_plan_id', flat=True)
+    
+    user_saved_diet_ids = UserDietPlan.objects.filter(
+        user=request.user
+    ).values_list('diet_plan_id', flat=True)
+    
+    context = {
+        'workouts': workouts,
+        'diets': diets,
+        'user_saved_workout_ids': user_saved_workout_ids,
+        'user_saved_diet_ids': user_saved_diet_ids,
+        'title': 'Add Plans'
+    }
+    
+    return render(request, 'fitnessTrackerApp/add_plans.html', context)
 
+@login_required(login_url='/')
+def saved_plans(request):
+    saved_workouts = UserWorkoutPlan.objects.filter(user=request.user).select_related('workout_plan')
+    saved_diets = UserDietPlan.objects.filter(user=request.user).select_related('diet_plan')
+    
+    context = {
+        'saved_workouts': saved_workouts,
+        'saved_diets': saved_diets,
+        'title': 'Saved Plans'
+    }
+    return render(request, 'fitnessTrackerApp/saved_plans.html', context)
