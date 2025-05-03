@@ -10,6 +10,8 @@ from django.core.validators import validate_email
 from django.core.exceptions import ValidationError
 from huggingface_hub import InferenceClient
 from django.conf import settings
+import requests
+
 
 def login_view(request):
     if request.method == 'POST':
@@ -137,29 +139,47 @@ def ai_recommendation(request):
     if not (goal and experience and preferences):
         return redirect('ai_question')
 
-    # Compose the prompt
-    prompt = f"Create a personalized fitness plan for someone with the goal: {goal}, experience level: {experience}, and preferences: {preferences}."
+    # Create prompt for Gemini
+    prompt = (
+        f"Create a 7-day personalized fitness plan for someone with the goal: {goal}, "
+        f"experience level: {experience}, and preferences: {preferences}. "
+        "Each day should include:\n"
+        "- A workout routine\n"
+        "- A unique meal plan (different from other days)\n\n"
+        "Format each day like this:\n"
+        "Day 1:\nWorkout: ...\nDiet: ...\n\n"
+        "Make each day's plan clear and separated with double line breaks."
+    )
 
     generated_plan = ""
     error_message = ""
+    days = []
 
     try:
-        # Initialize Hugging Face client
-        client = InferenceClient(
-            model="mistralai/Mistral-7B-Instruct-v0.1",
-            token=settings.HF_API_KEY
-        )
+        # Send prompt to Gemini
+        url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key={settings.GEMINI_API_KEY}"
+        headers = {'Content-Type': 'application/json'}
+        data = {
+            "contents": [{
+                "parts": [{"text": prompt}]
+            }]
+        }
 
-        # Generate response
-        response = client.text_generation(prompt, max_new_tokens=200)
-        generated_plan = response.strip()
+        response = requests.post(url, headers=headers, json=data)
+        response.raise_for_status()
+        result = response.json()
+
+        # Extract generated text
+        generated_plan = result['candidates'][0]['content']['parts'][0]['text'].strip()
+        days = generated_plan.split("\n\n")
 
     except Exception as e:
         error_message = f"There was an error: {str(e)}"
+        days = [generated_plan] if generated_plan else []
 
-    # Prepare context
+    # Render page
     context = {
-        'generated_plan': generated_plan if generated_plan else "No plan generated.",
+        'days': days,
         'user_goal': goal,
         'user_experience': experience,
         'user_preferences': preferences,

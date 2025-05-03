@@ -81,7 +81,16 @@
             margin-bottom: 2rem;
             text-align: left;
         }
-    </style>
+        .day-block {
+            background-color: rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 1rem;
+            padding: 1.25rem;
+            color: #fff;
+            white-space: pre-wrap;
+}
+
+</style>
 </head>
 <body>
 <nav class="navbar navbar-expand-lg">
@@ -122,13 +131,20 @@
             </div>
             {% endif %}
             
-            <!-- Plan display -->
             <div class="text-center">
                 <div class="ai-title">Your Generated Plan</div>
-                <div class="ai-desc">{{ generated_plan|linebreaksbr }}</div>
-            </div>
-            
-            <!-- Buttons -->
+              
+                {% for day in days|slice:":7" %}
+                  {% if day and day.strip %}
+                  <div class="day-block mb-4">
+                    <h5 class="fw-bold text-primary">Day {{ forloop.counter }}</h5>
+                    <pre class="mb-0">{{ day }}</pre>
+                  </div>
+                  {% endif %}
+                {% endfor %}
+              </div>
+
+<!-- Buttons -->
             <div class="text-center mt-4">
                 <a href="{% url 'ai_question' %}" class="btn login-circle me-2">Create a New Plan</a>
                 <a href="{% url 'guest_home' %}" class="btn btn-light">Back to Home</a>

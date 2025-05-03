@@ -10,13 +10,18 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
-import os
 import environ
+import os
 
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+from pathlib import Path
+BASE_DIR = Path(__file__).resolve().parent.parent
+
+
 env = environ.Env()
-environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
-HF_API_KEY = env("HF_API_KEY")
+environ.Env.read_env(os.path.join(BASE_DIR, '.env'))  # BASE_DIR must be defined
+
+GEMINI_API_KEY = env("GEMINI_API_KEY")
+
 
 from pathlib import Path
 
