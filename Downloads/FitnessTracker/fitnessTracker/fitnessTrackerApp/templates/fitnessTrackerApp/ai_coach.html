@@ -102,6 +102,19 @@
             white-space: pre-wrap; 
             word-wrap: break-word;
         }
+        .save-btn {
+            background: linear-gradient(90deg, #43c6ac 0%, #191654 100%);
+            color: #fff;
+            border: none;
+            font-weight: 600;
+            border-radius: 2rem;
+            padding: 0.5rem 1.5rem;
+            transition: background 0.2s, color 0.2s;
+        }
+        .save-btn:hover {
+            background: linear-gradient(90deg, #191654 0%, #43c6ac 100%);
+            color: #fff;
+        }
     </style>
 </head>
 <body>
@@ -117,7 +130,7 @@
         <div class="collapse navbar-collapse">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item"><a class="nav-link active" href="{% url 'dashboard' %}">Home</a></li>
-                <li class="nav-item"><a class="nav-link" href="#">About</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'saved_plans' %}">My Plans</a></li>
             </ul>
             <a href="{% url 'profile_view' %}" class="profile-button">Profile</a>
             <form action="{% url 'logout' %}" method="post">
@@ -159,6 +172,18 @@
     {% if generated_workout or generated_nutrition %}
         <div class="results-section mt-5">
             <h3 class="text-center mb-4" style="color: #43c6ac;">Your Personal Plan! ✨</h3>
+            
+            <!-- Single save button for both plans -->
+            <div class="d-flex justify-content-end mb-4">
+                <form method="POST" action="{% url 'save_ai_plans' %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="workout_content" value="{{ generated_workout }}">
+                    <input type="hidden" name="diet_content" value="{{ generated_nutrition }}">
+                    <input type="hidden" name="title_prefix" value="AI Plan">
+                    <input type="hidden" name="current_date" value="{{ current_date }}">
+                    <button type="submit" class="save-btn">Save Both Plans</button>
+                </form>
+            </div>
             
             {% if generated_workout %}
                 <h4>Workout Plan:</h4>
