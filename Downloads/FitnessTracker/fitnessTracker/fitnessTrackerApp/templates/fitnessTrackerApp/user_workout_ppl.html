@@ -101,7 +101,7 @@
         <div class="collapse navbar-collapse">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item"><a class="nav-link active" href="{% url 'guest_home' %}">Home</a></li>
-                <li class="nav-item"><a class="nav-link" href="#">About</a></li>
+           
             </ul>
             <a href="{% url 'profile_view' %}" class="profile-button">Profile</a>
             <form action="{% url 'logout' %}" method="post">
@@ -149,6 +149,12 @@
                     <li class="mt-3"><b>Day 6: Pull (repeat)</b></li>
                     <li class="mt-3"><b>Day 7: Legs (repeat)</b></li>
                 </ul>
+                <form method="post" action="{% url 'save_custom_workout' %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="title" value="PPL Split #1">
+                    <input type="hidden" name="content" value="<ul class='split-list text-start mx-auto' style='display:inline-block;text-align:left;'><li><b>Day 1: Push</b><br>- Bench Press: 4x8<br>- Overhead Press: 4x8<br>- Incline Dumbbell Press: 3x10<br>- Lateral Raises: 3x12<br>- Tricep Pushdowns: 3x12<br>- Chest Fly: 3x12</li><li class='mt-3'><b>Day 2: Pull</b><br>- Deadlift: 4x6<br>- Pull-Ups: 4x8<br>- Barbell Row: 3x10<br>- Face Pulls: 3x12<br>- Bicep Curls: 3x12<br>- Hammer Curls: 3x12</li><li class='mt-3'><b>Day 3: Legs</b><br>- Squats: 4x8<br>- Romanian Deadlift: 3x10<br>- Leg Press: 3x12<br>- Leg Curls: 3x12<br>- Calf Raises: 4x15<br>- Walking Lunges: 3x12</li><li class='mt-3'><b>Day 4: Rest</b></li><li class='mt-3'><b>Day 5: Push (repeat)</b></li><li class='mt-3'><b>Day 6: Pull (repeat)</b></li><li class='mt-3'><b>Day 7: Legs (repeat)</b></li></ul>">
+                    <button type="submit" class="btn btn-success mt-3">Save Workout</button>
+                </form>
             </div>
         </div>
         <div class="col-md-4">
@@ -184,6 +190,12 @@
                     <li class="mt-3"><b>Day 6: Pull (repeat)</b></li>
                     <li class="mt-3"><b>Day 7: Legs (repeat)</b></li>
                 </ul>
+                <form method="post" action="{% url 'save_custom_workout' %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="title" value="PPL Split #2">
+                    <input type="hidden" name="content" value="<ul class='split-list text-start mx-auto' style='display:inline-block;text-align:left;'><li><b>Day 1: Push</b><br>- Incline Bench Press: 4x8<br>- Arnold Press: 4x10<br>- Dips: 3x10<br>- Front Raises: 3x12<br>- Skullcrushers: 3x12<br>- Cable Fly: 3x12</li><li class='mt-3'><b>Day 2: Pull</b><br>- Barbell Row: 4x8<br>- Lat Pulldown: 4x10<br>- T-Bar Row: 3x10<br>- Rear Delt Fly: 3x12<br>- Preacher Curls: 3x12<br>- Concentration Curls: 3x12</li><li class='mt-3'><b>Day 3: Legs</b><br>- Front Squat: 4x8<br>- Bulgarian Split Squat: 3x10<br>- Hip Thrust: 3x12<br>- Leg Extension: 3x12<br>- Seated Calf Raise: 4x15<br>- Step-Ups: 3x12</li><li class='mt-3'><b>Day 4: Rest</b></li><li class='mt-3'><b>Day 5: Push (repeat)</b></li><li class='mt-3'><b>Day 6: Pull (repeat)</b></li><li class='mt-3'><b>Day 7: Legs (repeat)</b></li></ul>">
+                    <button type="submit" class="btn btn-success mt-3">Save Workout</button>
+                </form>
             </div>
         </div>
         <div class="col-md-4">
@@ -219,6 +231,12 @@
                     <li class="mt-3"><b>Day 6: Pull (repeat)</b></li>
                     <li class="mt-3"><b>Day 7: Legs (repeat)</b></li>
                 </ul>
+                <form method="post" action="{% url 'save_custom_workout' %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="title" value="PPL Split #3">
+                    <input type="hidden" name="content" value="<ul class='split-list text-start mx-auto' style='display:inline-block;text-align:left;'><li><b>Day 1: Push</b><br>- Dumbbell Press: 4x10<br>- Military Press: 4x8<br>- Incline Fly: 3x12<br>- Upright Row: 3x12<br>- Tricep Extension: 3x12<br>- Push-Ups: 3x15</li><li class='mt-3'><b>Day 2: Pull</b><br>- Chin-Ups: 4x8<br>- One-Arm Dumbbell Row: 4x10<br>- Cable Row: 3x12<br>- Shrugs: 3x12<br>- Reverse Curls: 3x12<br>- Cable Curls: 3x12</li><li class='mt-3'><b>Day 3: Legs</b><br>- Sumo Deadlift: 4x6<br>- Goblet Squat: 4x10<br>- Leg Curl: 3x12<br>- Calf Press: 4x15<br>- Box Jumps: 3x10<br>- Farmer's Walk: 3x30s</li><li class='mt-3'><b>Day 4: Rest</b></li><li class='mt-3'><b>Day 5: Push (repeat)</b></li><li class='mt-3'><b>Day 6: Pull (repeat)</b></li><li class='mt-3'><b>Day 7: Legs (repeat)</b></li></ul>">
+                    <button type="submit" class="btn btn-success mt-3">Save Workout</button>
+                </form>
             </div>
         </div>
     </div>

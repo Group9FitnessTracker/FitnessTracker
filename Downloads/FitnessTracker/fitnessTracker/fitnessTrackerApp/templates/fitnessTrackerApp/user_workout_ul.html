@@ -101,7 +101,7 @@
         <div class="collapse navbar-collapse">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item"><a class="nav-link active" href="{% url 'dashboard' %}">Home</a></li>
-                <li class="nav-item"><a class="nav-link" href="#">About</a></li>
+
             </ul>
             <a href="{% url 'profile_view' %}" class="profile-button">Profile</a>
             <form action="{% url 'logout' %}" method="post">
@@ -141,6 +141,12 @@
                     <li class="mt-3"><b>Day 6: Rest</b></li>
                     <li class="mt-3"><b>Day 7: Rest or Active Recovery</b></li>
                 </ul>
+                <form method="post" action="{% url 'save_custom_workout' %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="title" value="Upper/Lower Split #1">
+                    <input type="hidden" name="content" value="<ul class='split-list text-start mx-auto' style='display:inline-block;text-align:left;'><li><b>Day 1: Upper Body</b><br>- Bench Press: 4x8<br>- Pull-Ups: 3x8<br>- Shoulder Press: 3x10<br>- Barbell Row: 3x10<br>- Tricep Dips: 3x12<br>- Bicep Curls: 3x12</li><li class='mt-3'><b>Day 2: Lower Body</b><br>- Squats: 4x8<br>- Romanian Deadlift: 3x10<br>- Leg Press: 3x12<br>- Calf Raises: 3x15<br>- Walking Lunges: 3x12 (each leg)</li><li class='mt-3'><b>Day 3: Rest</b></li><li class='mt-3'><b>Day 4: Upper Body (repeat)</b></li><li class='mt-3'><b>Day 5: Lower Body (repeat)</b></li><li class='mt-3'><b>Day 6: Rest</b></li><li class='mt-3'><b>Day 7: Rest or Active Recovery</b></li></ul>">
+                    <button type="submit" class="btn btn-success mt-3">Save Workout</button>
+                </form>
             </div>
         </div>
         <div class="col-md-4">
@@ -168,6 +174,12 @@
                     <li class="mt-3"><b>Day 6: Rest</b></li>
                     <li class="mt-3"><b>Day 7: Rest or Active Recovery</b></li>
                 </ul>
+                <form method="post" action="{% url 'save_custom_workout' %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="title" value="Upper/Lower Split #2">
+                    <input type="hidden" name="content" value="<ul class='split-list text-start mx-auto' style='display:inline-block;text-align:left;'><li><b>Day 1: Upper Body</b><br>- Incline Dumbbell Press: 4x10<br>- Lat Pulldown: 3x10<br>- Arnold Press: 3x12<br>- Seated Cable Row: 3x12<br>- Skullcrushers: 3x12<br>- Hammer Curls: 3x12</li><li class='mt-3'><b>Day 2: Lower Body</b><br>- Deadlift: 4x6<br>- Bulgarian Split Squat: 3x10 (each leg)<br>- Leg Curl: 3x12<br>- Standing Calf Raise: 3x15<br>- Glute Bridge: 3x12</li><li class='mt-3'><b>Day 3: Rest</b></li><li class='mt-3'><b>Day 4: Upper Body (repeat)</b></li><li class='mt-3'><b>Day 5: Lower Body (repeat)</b></li><li class='mt-3'><b>Day 6: Rest</b></li><li class='mt-3'><b>Day 7: Rest or Active Recovery</b></li></ul>">
+                    <button type="submit" class="btn btn-success mt-3">Save Workout</button>
+                </form>
             </div>
         </div>
         <div class="col-md-4">
@@ -195,6 +207,12 @@
                     <li class="mt-3"><b>Day 6: Rest</b></li>
                     <li class="mt-3"><b>Day 7: Rest or Active Recovery</b></li>
                 </ul>
+                <form method="post" action="{% url 'save_custom_workout' %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="title" value="Upper/Lower Split #3">
+                    <input type="hidden" name="content" value="<ul class='split-list text-start mx-auto' style='display:inline-block;text-align:left;'><li><b>Day 1: Upper Body</b><br>- Push-Ups: 4x12<br>- Inverted Row: 3x10<br>- Dumbbell Shoulder Press: 3x12<br>- One-Arm Dumbbell Row: 3x12 (each arm)<br>- Triceps Kickback: 3x15<br>- EZ Bar Curl: 3x12</li><li class='mt-3'><b>Day 2: Lower Body</b><br>- Goblet Squat: 4x10<br>- Hip Thrust: 3x12<br>- Leg Extension: 3x15<br>- Seated Calf Raise: 3x15<br>- Step-Ups: 3x12 (each leg)</li><li class='mt-3'><b>Day 3: Rest</b></li><li class='mt-3'><b>Day 4: Upper Body (repeat)</b></li><li class='mt-3'><b>Day 5: Lower Body (repeat)</b></li><li class='mt-3'><b>Day 6: Rest</b></li><li class='mt-3'><b>Day 7: Rest or Active Recovery</b></li></ul>">
+                    <button type="submit" class="btn btn-success mt-3">Save Workout</button>
+                </form>
             </div>
         </div>
     </div>

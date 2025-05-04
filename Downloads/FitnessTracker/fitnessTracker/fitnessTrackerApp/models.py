@@ -110,3 +110,21 @@ class UserDietPlan(models.Model):
     
     def __str__(self):
         return f"{self.user.username}'s saved diet: {self.diet_plan.name}"
+
+class UserCustomWorkoutPlan(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='custom_saved_workouts')
+    title = models.CharField(max_length=255)
+    content = models.TextField()  # Store the HTML/text
+    date_saved = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.user.username}'s custom workout: {self.title}"
+
+class UserCustomDietPlan(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='custom_saved_diets')
+    title = models.CharField(max_length=255)
+    content = models.TextField()  # Store the HTML/text
+    date_saved = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.user.username}'s custom diet: {self.title}"

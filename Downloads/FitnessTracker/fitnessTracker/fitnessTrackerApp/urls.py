@@ -75,8 +75,7 @@ urlpatterns = [
         template_name='registration/password_reset_confirm.html'
     ), name='password_reset_confirm'),
 
-
-
-
+    path('save-custom-workout/', views.save_custom_workout, name='save_custom_workout'),
+    path('save-custom-diet/', views.save_custom_diet, name='save_custom_diet'),
 
 ]

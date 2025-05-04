@@ -101,7 +101,7 @@
         <div class="collapse navbar-collapse">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item"><a class="nav-link active" href="{% url 'dashboard' %}">Home</a></li>
-                <li class="nav-item"><a class="nav-link" href="#">About</a></li>
+                
             </ul>
             <a href="{% url 'profile_view' %}" class="profile-button">Profile</a>
             <form action="{% url 'logout' %}" method="post">
@@ -142,6 +142,12 @@
                     <li class="mt-3"><b>Day 6: Rest</b></li>
                     <li class="mt-3"><b>Day 7: Rest or Active Recovery</b></li>
                 </ul>
+                <form method="post" action="{% url 'save_custom_workout' %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="title" value="Full Body Split #1">
+                    <input type="hidden" name="content" value="<ul class='split-list text-start mx-auto' style='display:inline-block;text-align:left;'><li><b>Day 1: Full Body</b><br>- Squats: 4x8<br>- Bench Press: 4x8<br>- Deadlift: 3x6<br>- Overhead Press: 3x10<br>- Pull-Ups: 3x8<br>- Plank: 3x60s</li><li class='mt-3'><b>Day 2: Rest</b></li><li class='mt-3'><b>Day 3: Full Body</b><br>- Deadlift: 4x6<br>- Incline Bench Press: 4x8<br>- Bulgarian Split Squat: 3x10<br>- Lat Pulldown: 3x10<br>- Shoulder Press: 3x10<br>- Russian Twists: 3x15</li><li class='mt-3'><b>Day 4: Rest</b></li><li class='mt-3'><b>Day 5: Full Body (repeat Day 1)</b></li><li class='mt-3'><b>Day 6: Rest</b></li><li class='mt-3'><b>Day 7: Rest or Active Recovery</b></li></ul>">
+                    <button type="submit" class="btn btn-success mt-3">Save Workout</button>
+                </form>
             </div>
         </div>
         <div class="col-md-4">
@@ -170,6 +176,12 @@
                     <li class="mt-3"><b>Day 6: Rest</b></li>
                     <li class="mt-3"><b>Day 7: Rest or Active Recovery</b></li>
                 </ul>
+                <form method="post" action="{% url 'save_custom_workout' %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="title" value="Full Body Split #2">
+                    <input type="hidden" name="content" value="<ul class='split-list text-start mx-auto' style='display:inline-block;text-align:left;'><li><b>Day 1: Full Body</b><br>- Front Squat: 4x8<br>- Dumbbell Press: 4x10<br>- Romanian Deadlift: 3x10<br>- Arnold Press: 3x12<br>- Barbell Row: 3x10<br>- Hanging Leg Raise: 3x12</li><li class='mt-3'><b>Day 2: Rest</b></li><li class='mt-3'><b>Day 3: Full Body</b><br>- Goblet Squat: 4x10<br>- Incline Dumbbell Press: 4x10<br>- Hip Thrust: 3x12<br>- Lat Pulldown: 3x12<br>- Lateral Raise: 3x12<br>- Cable Woodchoppers: 3x12</li><li class='mt-3'><b>Day 4: Rest</b></li><li class='mt-3'><b>Day 5: Full Body (repeat Day 1)</b></li><li class='mt-3'><b>Day 6: Rest</b></li><li class='mt-3'><b>Day 7: Rest or Active Recovery</b></li></ul>">
+                    <button type="submit" class="btn btn-success mt-3">Save Workout</button>
+                </form>
             </div>
         </div>
         <div class="col-md-4">
@@ -198,6 +210,12 @@
                     <li class="mt-3"><b>Day 6: Rest</b></li>
                     <li class="mt-3"><b>Day 7: Rest or Active Recovery</b></li>
                 </ul>
+                <form method="post" action="{% url 'save_custom_workout' %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="title" value="Full Body Split #3">
+                    <input type="hidden" name="content" value="<ul class='split-list text-start mx-auto' style='display:inline-block;text-align:left;'><li><b>Day 1: Full Body</b><br>- Bulgarian Split Squat: 4x10<br>- Push Press: 4x8<br>- Sumo Deadlift: 3x8<br>- Chin-Ups: 3x8<br>- Face Pulls: 3x12<br>- Hanging Knee Raises: 3x12</li><li class='mt-3'><b>Day 2: Rest</b></li><li class='mt-3'><b>Day 3: Full Body</b><br>- Step-Ups: 4x10<br>- Dumbbell Shoulder Press: 4x10<br>- Good Mornings: 3x10<br>- Inverted Row: 3x10<br>- Cable Fly: 3x12<br>- Plank with Shoulder Taps: 3x30s</li><li class='mt-3'><b>Day 4: Rest</b></li><li class='mt-3'><b>Day 5: Full Body (repeat Day 1)</b></li><li class='mt-3'><b>Day 6: Rest</b></li><li class='mt-3'><b>Day 7: Rest or Active Recovery</b></li></ul>">
+                    <button type="submit" class="btn btn-success mt-3">Save Workout</button>
+                </form>
             </div>
         </div>
     </div>

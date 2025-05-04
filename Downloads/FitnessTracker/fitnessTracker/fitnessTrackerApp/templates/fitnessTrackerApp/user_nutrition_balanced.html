@@ -69,7 +69,6 @@
         <div class="collapse navbar-collapse">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item"><a class="nav-link active" href="{% url 'dashboard' %}">Home</a></li>
-                <li class="nav-item"><a class="nav-link" href="#">About</a></li>
             </ul>
             <a href="{% url 'profile_view' %}" class="profile-button">Profile</a>
        <form action="{% url 'logout' %}" method="post">
@@ -87,7 +86,7 @@
     </div>
     <div class="row g-4 justify-content-center text-center">
         <div class="col-md-4">
-            <div class="split-card h-100" style="background:#fff; border-radius: 1rem;">
+            <div class="split-card h-100 d-flex flex-column bg-white rounded-4">
                 <div class="split-title" style="color:#43c6ac; font-weight:700; font-size:1.2rem; margin-bottom:1rem;">Day #1</div>
                 <ul class="split-list text-start mx-auto" style="display:inline-block;text-align:left;">
                     <li><b>Breakfast:</b> Oatmeal with berries & almonds, Greek yogurt</li>
@@ -95,10 +94,16 @@
                     <li class="mt-2"><b>Dinner:</b> Salmon, brown rice, asparagus</li>
                     <li class="mt-2"><b>Snack:</b> Apple with peanut butter</li>
                 </ul>
+                <form method="post" action="{% url 'save_custom_diet' %}" class="mt-auto d-flex justify-content-center">
+                    {% csrf_token %}
+                    <input type="hidden" name="title" value="Balanced Diet Day #1">
+                    <input type="hidden" name="content" value="<ul class='split-list text-start mx-auto' style='display:inline-block;text-align:left;'><li><b>Breakfast:</b> Oatmeal with berries & almonds, Greek yogurt</li><li class='mt-2'><b>Lunch:</b> Grilled chicken breast, quinoa, steamed broccoli</li><li class='mt-2'><b>Dinner:</b> Salmon, brown rice, asparagus</li><li class='mt-2'><b>Snack:</b> Apple with peanut butter</li></ul>">
+                    <button type="submit" class="btn btn-success mt-3">Save Diet Plan</button>
+                </form>
             </div>
         </div>
         <div class="col-md-4">
-            <div class="split-card h-100" style="background:#fff; border-radius: 1rem;">
+            <div class="split-card h-100 d-flex flex-column bg-white rounded-4">
                 <div class="split-title" style="color:#43c6ac; font-weight:700; font-size:1.2rem; margin-bottom:1rem;">Day #2</div>
                 <ul class="split-list text-start mx-auto" style="display:inline-block;text-align:left;">
                     <li><b>Breakfast:</b> Scrambled eggs, whole grain toast, orange slices</li>
@@ -106,10 +111,16 @@
                     <li class="mt-2"><b>Dinner:</b> Stir-fried tofu, brown rice, mixed vegetables</li>
                     <li class="mt-2"><b>Snack:</b> Greek yogurt with honey & walnuts</li>
                 </ul>
+                <form method="post" action="{% url 'save_custom_diet' %}" class="mt-auto d-flex justify-content-center">
+                    {% csrf_token %}
+                    <input type="hidden" name="title" value="Balanced Diet Day #2">
+                    <input type="hidden" name="content" value="<ul class='split-list text-start mx-auto' style='display:inline-block;text-align:left;'><li><b>Breakfast:</b> Scrambled eggs, whole grain toast, orange slices</li><li class='mt-2'><b>Lunch:</b> Turkey & avocado wrap, mixed green salad</li><li class='mt-2'><b>Dinner:</b> Stir-fried tofu, brown rice, mixed vegetables</li><li class='mt-2'><b>Snack:</b> Greek yogurt with honey & walnuts</li></ul>">
+                    <button type="submit" class="btn btn-success mt-3">Save Diet Plan</button>
+                </form>
             </div>
         </div>
         <div class="col-md-4">
-            <div class="split-card h-100" style="background:#fff; border-radius: 1rem;">
+            <div class="split-card h-100 d-flex flex-column bg-white rounded-4">
                 <div class="split-title" style="color:#43c6ac; font-weight:700; font-size:1.2rem; margin-bottom:1rem;">Day #3</div>
                 <ul class="split-list text-start mx-auto" style="display:inline-block;text-align:left;">
                     <li><b>Breakfast:</b> Smoothie (spinach, banana, protein powder, almond milk)</li>
@@ -117,6 +128,12 @@
                     <li class="mt-2"><b>Dinner:</b> Baked chicken, sweet potato, green beans</li>
                     <li class="mt-2"><b>Snack:</b> Mixed nuts & dried fruit</li>
                 </ul>
+                <form method="post" action="{% url 'save_custom_diet' %}" class="mt-auto d-flex justify-content-center">
+                    {% csrf_token %}
+                    <input type="hidden" name="title" value="Balanced Diet Day #3">
+                    <input type="hidden" name="content" value="<ul class='split-list text-start mx-auto' style='display:inline-block;text-align:left;'><li><b>Breakfast:</b> Smoothie (spinach, banana, protein powder, almond milk)</li><li class='mt-2'><b>Lunch:</b> Grilled shrimp, couscous, roasted vegetables</li><li class='mt-2'><b>Dinner:</b> Baked chicken, sweet potato, green beans</li><li class='mt-2'><b>Snack:</b> Mixed nuts & dried fruit</li></ul>">
+                    <button type="submit" class="btn btn-success mt-3">Save Diet Plan</button>
+                </form>
             </div>
         </div>
     </div>

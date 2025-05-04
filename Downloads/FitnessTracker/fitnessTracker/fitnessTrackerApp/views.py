@@ -12,7 +12,7 @@ from django.core.exceptions import ValidationError
 from django.db import IntegrityError
 from .models import (
     UserProfile, WorkoutPlan, DietPlan, 
-    UserWorkoutPlan, UserDietPlan
+    UserWorkoutPlan, UserDietPlan, UserCustomWorkoutPlan, UserCustomDietPlan
 )
 
 
@@ -510,13 +510,32 @@ def add_plans(request):
 def saved_plans(request):
     saved_workouts = UserWorkoutPlan.objects.filter(user=request.user).select_related('workout_plan')
     saved_diets = UserDietPlan.objects.filter(user=request.user).select_related('diet_plan')
-    
+    custom_saved_workouts = UserCustomWorkoutPlan.objects.filter(user=request.user)
+    custom_saved_diets = UserCustomDietPlan.objects.filter(user=request.user)
     context = {
         'saved_workouts': saved_workouts,
         'saved_diets': saved_diets,
+        'custom_saved_workouts': custom_saved_workouts,
+        'custom_saved_diets': custom_saved_diets,
         'title': 'Saved Plans'
     }
     return render(request, 'fitnessTrackerApp/saved_plans.html', context)
 
    # return render(request, 'fitnessTrackerApp/dashboard.html')
+
+@login_required(login_url='/')
+def save_custom_workout(request):
+    if request.method == "POST":
+        title = request.POST.get("title")
+        content = request.POST.get("content")
+        UserCustomWorkoutPlan.objects.create(user=request.user, title=title, content=content)
+    return redirect('user_workout_ul')
+
+@login_required(login_url='/')
+def save_custom_diet(request):
+    if request.method == "POST":
+        title = request.POST.get("title")
+        content = request.POST.get("content")
+        UserCustomDietPlan.objects.create(user=request.user, title=title, content=content)
+    return redirect('user_nutrition')
 

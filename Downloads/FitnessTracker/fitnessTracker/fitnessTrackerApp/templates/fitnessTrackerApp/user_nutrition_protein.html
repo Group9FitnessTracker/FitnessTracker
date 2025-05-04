@@ -69,7 +69,6 @@
         <div class="collapse navbar-collapse">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item"><a class="nav-link active" href="{% url 'dashboard' %}">Home</a></li>
-                <li class="nav-item"><a class="nav-link" href="#">About</a></li>
             </ul>
             <a href="{% url 'profile_view' %}" class="profile-button">Profile</a>
             <form action="{% url 'logout' %}" method="post">
@@ -87,7 +86,7 @@
     </div>
     <div class="row g-4 justify-content-center text-center">
         <div class="col-md-4">
-            <div class="split-card h-100" style="background:#fff; border-radius: 1rem;">
+            <div class="split-card h-100 d-flex flex-column bg-white rounded-4">
                 <div class="split-title" style="color:#43c6ac; font-weight:700; font-size:1.2rem; margin-bottom:1rem;">Day #1</div>
                 <ul class="split-list text-start mx-auto" style="display:inline-block;text-align:left;">
                     <li><b>Breakfast:</b> Scrambled eggs with spinach, whole grain toast</li>
@@ -95,10 +94,16 @@
                     <li class="mt-2"><b>Dinner:</b> Baked salmon, quinoa, roasted broccoli</li>
                     <li class="mt-2"><b>Snack:</b> Greek yogurt parfait with berries & chia seeds</li>
                 </ul>
+                <form method="post" action="{% url 'save_custom_diet' %}" class="mt-auto d-flex justify-content-center">
+                    {% csrf_token %}
+                    <input type="hidden" name="title" value="High Protein Day #1">
+                    <input type="hidden" name="content" value="<ul class='split-list text-start mx-auto' style='display:inline-block;text-align:left;'><li><b>Breakfast:</b> Scrambled eggs with spinach, whole grain toast</li><li class='mt-2'><b>Lunch:</b> Grilled chicken breast, sweet potato, green beans</li><li class='mt-2'><b>Dinner:</b> Baked salmon, quinoa, roasted broccoli</li><li class='mt-2'><b>Snack:</b> Greek yogurt parfait with berries & chia seeds</li></ul>">
+                    <button type="submit" class="btn btn-success mt-3">Save Diet Plan</button>
+                </form>
             </div>
         </div>
         <div class="col-md-4">
-            <div class="split-card h-100" style="background:#fff; border-radius: 1rem;">
+            <div class="split-card h-100 d-flex flex-column bg-white rounded-4">
                 <div class="split-title" style="color:#43c6ac; font-weight:700; font-size:1.2rem; margin-bottom:1rem;">Day #2</div>
                 <ul class="split-list text-start mx-auto" style="display:inline-block;text-align:left;">
                     <li><b>Breakfast:</b> Cottage cheese with pineapple, almonds</li>
@@ -106,10 +111,16 @@
                     <li class="mt-2"><b>Dinner:</b> Turkey meatballs, brown rice, sautéed spinach</li>
                     <li class="mt-2"><b>Snack:</b> Protein shake with banana</li>
                 </ul>
+                <form method="post" action="{% url 'save_custom_diet' %}" class="mt-auto d-flex justify-content-center">
+                    {% csrf_token %}
+                    <input type="hidden" name="title" value="High Protein Day #2">
+                    <input type="hidden" name="content" value="<ul class='split-list text-start mx-auto' style='display:inline-block;text-align:left;'><li><b>Breakfast:</b> Cottage cheese with pineapple, almonds</li><li class='mt-2'><b>Lunch:</b> Tuna salad (tuna, mixed greens, chickpeas, olive oil)</li><li class='mt-2'><b>Dinner:</b> Turkey meatballs, brown rice, sautéed spinach</li><li class='mt-2'><b>Snack:</b> Protein shake with banana</li></ul>">
+                    <button type="submit" class="btn btn-success mt-3">Save Diet Plan</button>
+                </form>
             </div>
         </div>
         <div class="col-md-4">
-            <div class="split-card h-100" style="background:#fff; border-radius: 1rem;">
+            <div class="split-card h-100 d-flex flex-column bg-white rounded-4">
                 <div class="split-title" style="color:#43c6ac; font-weight:700; font-size:1.2rem; margin-bottom:1rem;">Day #3</div>
                 <ul class="split-list text-start mx-auto" style="display:inline-block;text-align:left;">
                     <li><b>Breakfast:</b> Protein pancakes, peanut butter, strawberries</li>
@@ -117,6 +128,12 @@
                     <li class="mt-2"><b>Dinner:</b> Grilled shrimp, lentil salad, asparagus</li>
                     <li class="mt-2"><b>Snack:</b> Hard-boiled eggs & baby carrots</li>
                 </ul>
+                <form method="post" action="{% url 'save_custom_diet' %}" class="mt-auto d-flex justify-content-center">
+                    {% csrf_token %}
+                    <input type="hidden" name="title" value="High Protein Day #3">
+                    <input type="hidden" name="content" value="<ul class='split-list text-start mx-auto' style='display:inline-block;text-align:left;'><li><b>Breakfast:</b> Protein pancakes, peanut butter, strawberries</li><li class='mt-2'><b>Lunch:</b> Tofu stir-fry with mixed vegetables, brown rice</li><li class='mt-2'><b>Dinner:</b> Grilled shrimp, lentil salad, asparagus</li><li class='mt-2'><b>Snack:</b> Hard-boiled eggs & baby carrots</li></ul>">
+                    <button type="submit" class="btn btn-success mt-3">Save Diet Plan</button>
+                </form>
             </div>
         </div>
     </div>
