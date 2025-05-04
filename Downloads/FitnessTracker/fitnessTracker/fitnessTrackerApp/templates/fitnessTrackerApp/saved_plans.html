@@ -236,7 +236,7 @@
                 <div class="empty-plans">
                     <h4>You haven't saved any workout plans yet!</h4>
                     <p class="mb-4">Discover and save workout plans to track your fitness journey.</p>
-                    <a href="{% url 'add_plans' %}?tab=workouts" class="btn btn-view">Browse Workout Plans</a>
+                    <a href="{% url 'user_workouts' %}" class="btn btn-view">Browse Workout Plans</a>
                 </div>
             {% endif %}
         </div>
@@ -278,7 +278,7 @@
                 <div class="empty-plans">
                     <h4>You haven't saved any diet plans yet!</h4>
                     <p class="mb-4">Discover and save diet plans to help reach your nutrition goals.</p>
-                    <a href="{% url 'add_plans' %}?tab=diets" class="btn btn-view">Browse Diet Plans</a>
+                    <a href="{% url 'user_nutrition' %}" class="btn btn-view">Browse Diet Plans</a>
                 </div>
             {% endif %}
         </div>
