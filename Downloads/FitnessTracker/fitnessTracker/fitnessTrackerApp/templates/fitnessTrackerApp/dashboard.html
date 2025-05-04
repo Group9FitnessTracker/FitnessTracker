@@ -126,7 +126,11 @@
                 <div class="card-body">
                     <h5 class="card-title">Workout Plans</h5>
                     <p class="card-text">Personalized routines for all levels. Build muscle, burn fat, and stay motivated!</p>
-                    <a href="{% url 'add_plans' %}?tab=workouts" class="btn btn-fitness">Add Workouts</a>
+
+                    <! -- <a href="{% url 'add_plans' %}?tab=workouts" class="btn btn-fitness">Add Workouts</a> -->
+
+                    <a href="{% url 'user_workouts' %}" class="btn btn-fitness">Explore Workouts</a>
+
                 </div>
             </div>
         </div>
@@ -136,7 +140,11 @@
                 <div class="card-body">
                     <h5 class="card-title">Nutrition</h5>
                     <p class="card-text">Healthy meal plans and nutrition tips to fuel your body and reach your goals.</p>
-                    <a href="{% url 'add_plans' %}?tab=diets" class="btn btn-fitness">Add Diet Plans</a>
+
+                   <! -- <a href="{% url 'add_plans' %}?tab=diets" class="btn btn-fitness">Add Diet Plans</a> -->
+
+                    <a href="{% url 'user_nutrition' %}" class="btn btn-fitness">View Nutrition</a>
+
                 </div>
             </div>
         </div>

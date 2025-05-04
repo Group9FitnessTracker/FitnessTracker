@@ -35,6 +35,16 @@ urlpatterns = [
     path('guest_nutrition_lowcarb/', views.guest_nutrition_lowcarb, name='guest_nutrition_lowcarb'),
     path('guest_workout_ul/', views.guest_workout_ul, name='guest_workout_ul'),
     path('guest_workout_ppl/', views.guest_workout_ppl, name='guest_workout_ppl'),
+    path('user_workouts/', views.user_workouts, name='user_workouts'),
+    path('user_nutrition/', views.user_nutrition, name='user_nutrition'),
+    path('user_workout_fullbody/', views.user_workout_fullbody, name='user_workout_fullbody'),
+    path('user_workout_hiit/', views.user_workout_hiit, name='user_workout_hiit'),
+    path('user_workout_strength/', views.user_workout_strength, name='user_workout_strength'),
+    path('user_nutrition_balanced/', views.user_nutrition_balanced, name='user_nutrition_balanced'),
+    path('user_nutrition_protein/', views.user_nutrition_protein, name='user_nutrition_protein'),
+    path('user_nutrition_lowcarb/', views.user_nutrition_lowcarb, name='user_nutrition_lowcarb'),
+    path('user_workout_ul/', views.user_workout_ul, name='user_workout_ul'),
+    path('user_workout_ppl/', views.user_workout_ppl, name='user_workout_ppl'),
     path('ai_coach/', views.ai_coach, name='ai_coach'),
     path('create_account/', views.create_account, name='create_account'),
     path('dashboard/', views.dashboard, name='dashboard'),
@@ -60,4 +70,13 @@ urlpatterns = [
          subject_template_name='registration/password_reset_subject.txt'
      ),
      name='reset_password'),
+
+     path('reset/<uidb64>/<token>/', auth_views.PasswordResetConfirmView.as_view(
+        template_name='registration/password_reset_confirm.html'
+    ), name='password_reset_confirm'),
+
+
+
+
+
 ]

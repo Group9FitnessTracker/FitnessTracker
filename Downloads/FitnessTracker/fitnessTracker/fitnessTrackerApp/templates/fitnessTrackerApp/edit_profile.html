@@ -128,6 +128,24 @@
           <option value="female" {% if profile.gender == "female" %}selected{% endif %}>Female</option>
         </select>
       </div>
+      <div class="mb-3">
+        <label for="goal" class="form-label">Fitness Goal</label>
+        <select class="form-select" name="goal" id="goal">
+          <option value="lose_weight" {% if profile.goal == 'lose_weight' %}selected{% endif %}>Lose Weight</option>
+          <option value="build_muscle" {% if profile.goal == 'build_muscle' %}selected{% endif %}>Build Muscle</option>
+          <option value="general_health" {% if profile.goal == 'general_health' %}selected{% endif %}>General Health</option>
+        </select>
+      </div>
+      
+      <div class="mb-3">
+        <label for="activity_level" class="form-label">Activity Level</label>
+        <select class="form-select" name="activity_level" id="activity_level">
+          <option value="low" {% if profile.activity_level == 'low' %}selected{% endif %}>Low</option>
+          <option value="moderate" {% if profile.activity_level == 'moderate' %}selected{% endif %}>Moderate</option>
+          <option value="high" {% if profile.activity_level == 'high' %}selected{% endif %}>High</option>
+        </select>
+      </div>
+      
 
       <div class="d-grid">
         <button type="submit" class="btn btn-save">Save</button>
