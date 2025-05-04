@@ -18,9 +18,10 @@ urlpatterns = [
     # URLs for saving plans to user accounts
     path('workouts/<int:workout_id>/save/', views.save_workout, name='save_workout'),
     path('workouts/<int:workout_id>/remove/', views.remove_workout, name='remove_workout'),
+    path('remove_custom_workout/<int:workout_id>/', views.remove_custom_workout, name='remove_custom_workout'),
     path('diets/<int:diet_id>/save/', views.save_diet, name='save_diet'),
     path('diets/<int:diet_id>/remove/', views.remove_diet, name='remove_diet'),
-    path('add-plans/', views.add_plans, name='add_plans'),
+    path('remove_custom_diet/<int:diet_id>/', views.remove_custom_diet, name='remove_custom_diet'),
     path('saved-plans/', views.saved_plans, name='saved_plans'),
 
 
@@ -46,6 +47,7 @@ urlpatterns = [
     path('user_workout_ul/', views.user_workout_ul, name='user_workout_ul'),
     path('user_workout_ppl/', views.user_workout_ppl, name='user_workout_ppl'),
     path('ai_coach/', views.ai_coach, name='ai_coach'),
+    path('save_ai_plans/', views.save_ai_plans, name='save_ai_plans'),
     path('create_account/', views.create_account, name='create_account'),
     path('dashboard/', views.dashboard, name='dashboard'),
     path('login/', views.login_view, name='login'),

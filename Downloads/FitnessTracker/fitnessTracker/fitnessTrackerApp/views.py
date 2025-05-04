@@ -9,6 +9,8 @@ import re
 from django.core.validators import validate_email
 from django.core.exceptions import ValidationError
 
+from django.utils import timezone
+
 from django.db import IntegrityError
 from .models import (
     UserProfile, WorkoutPlan, DietPlan, 
@@ -411,8 +413,42 @@ def ai_coach(request):
          'profile': profile,
          'generated_workout': generated_workout,
          'generated_nutrition': generated_nutrition,
+         'current_date': timezone.now().strftime("%Y-%m-%d"),
     }
     return render(request, 'fitnessTrackerApp/ai_coach.html', context)
+
+
+@login_required(login_url='/')
+def save_ai_plans(request):
+    if request.method == "POST":
+        title_prefix = request.POST.get("title_prefix", "AI Plan")
+        workout_content = request.POST.get("workout_content")
+        diet_content = request.POST.get("diet_content")
+        current_date = request.POST.get("current_date")
+        
+        # Format the content to display properly in HTML
+        formatted_workout_content = workout_content.replace('\n', '<br>') if workout_content else None
+        formatted_diet_content = diet_content.replace('\n', '<br>') if diet_content else None
+        
+        # Save workout plan if it exists
+        if formatted_workout_content:
+            UserCustomWorkoutPlan.objects.create(
+                user=request.user,
+                title=f"{title_prefix} - Workout - {current_date}",
+                content=formatted_workout_content
+            )
+        
+        # Save diet plan if it exists
+        if formatted_diet_content:
+            UserCustomDietPlan.objects.create(
+                user=request.user,
+                title=f"{title_prefix} - Diet - {current_date}",
+                content=formatted_diet_content
+            )
+        
+        messages.success(request, "AI Plans saved successfully!")
+        return redirect('ai_coach')
+    return redirect('ai_coach')
 
 
 def create_account(request):
@@ -504,7 +540,7 @@ def add_plans(request):
         'title': 'Add Plans'
     }
     
-    return render(request, 'fitnessTrackerApp/add_plans.html', context)
+    return render(request, 'fitnessTrackerApp/saved_plans.html', context)
 
 @login_required(login_url='/')
 def saved_plans(request):
@@ -539,3 +575,27 @@ def save_custom_diet(request):
         UserCustomDietPlan.objects.create(user=request.user, title=title, content=content)
     return redirect('user_nutrition')
 
+
+@login_required(login_url='/')
+def remove_custom_workout(request, workout_id):
+    """
+    View function to remove a custom workout plan
+    """
+    workout = get_object_or_404(UserCustomWorkoutPlan, pk=workout_id, user=request.user)
+    workout_title = workout.title
+    workout.delete()
+    
+    messages.success(request, f"'{workout_title}' has been removed from your saved workouts.")
+    return redirect('saved_plans')
+
+@login_required(login_url='/')
+def remove_custom_diet(request, diet_id):
+    """
+    View function to remove a custom diet plan
+    """
+    diet = get_object_or_404(UserCustomDietPlan, pk=diet_id, user=request.user)
+    diet_title = diet.title
+    diet.delete()
+    
+    messages.success(request, f"'{diet_title}' has been removed from your saved diets.")
+    return redirect('saved_plans')
