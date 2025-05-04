@@ -98,7 +98,8 @@
         <div class="collapse navbar-collapse">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item"><a class="nav-link active" href="{% url 'dashboard' %}">Home</a></li>
-                <li class="nav-item"><a class="nav-link" href="#">About</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'add_plans' %}">Add Plans</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'saved_plans' %}">My Plans</a></li>
             </ul>
             <a href="{% url 'profile_view' %}" class="profile-button">Profile</a>
             <form action="{% url 'logout' %}" method="post">
@@ -125,7 +126,11 @@
                 <div class="card-body">
                     <h5 class="card-title">Workout Plans</h5>
                     <p class="card-text">Personalized routines for all levels. Build muscle, burn fat, and stay motivated!</p>
+
+                    <! -- <a href="{% url 'add_plans' %}?tab=workouts" class="btn btn-fitness">Add Workouts</a> -->
+
                     <a href="{% url 'user_workouts' %}" class="btn btn-fitness">Explore Workouts</a>
+
                 </div>
             </div>
         </div>
@@ -135,7 +140,11 @@
                 <div class="card-body">
                     <h5 class="card-title">Nutrition</h5>
                     <p class="card-text">Healthy meal plans and nutrition tips to fuel your body and reach your goals.</p>
+
+                   <! -- <a href="{% url 'add_plans' %}?tab=diets" class="btn btn-fitness">Add Diet Plans</a> -->
+
                     <a href="{% url 'user_nutrition' %}" class="btn btn-fitness">View Nutrition</a>
+
                 </div>
             </div>
         </div>
@@ -149,9 +158,32 @@
                 </div>
             </div>
         </div>
+        <div class="col-md-3 col-sm-6">
+            <div class="card feature-card h-100">
+                <img src="{% static 'fitnessTrackerApp/images/gym8.png' %}" class="feature-img" alt="Saved Plans">
+                <div class="card-body">
+                    <h5 class="card-title">My Plans</h5>
+                    <p class="card-text">View and manage all your saved workout and diet plans in one place.</p>
+                    <a href="{% url 'saved_plans' %}" class="btn btn-fitness">View My Plans</a>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+  // Check if URL has tab parameter
+  document.addEventListener('DOMContentLoaded', function() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const tab = urlParams.get('tab');
+    if (tab === 'diets') {
+      const dietsTab = document.getElementById('diets-tab');
+      if (dietsTab) {
+        dietsTab.click();
+      }
+    }
+  });
+</script>
 </body>
 </html>

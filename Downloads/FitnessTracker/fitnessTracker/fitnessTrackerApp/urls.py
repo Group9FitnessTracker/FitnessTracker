@@ -14,6 +14,15 @@ urlpatterns = [
     path('workouts/<int:workout_id>/', views.workout_detail, name='workout_detail'),
     path('diets/', views.diet_catalog, name='diet_catalog'),
     path('diets/<int:diet_id>/', views.diet_detail, name='diet_detail'),
+    
+    # URLs for saving plans to user accounts
+    path('workouts/<int:workout_id>/save/', views.save_workout, name='save_workout'),
+    path('workouts/<int:workout_id>/remove/', views.remove_workout, name='remove_workout'),
+    path('diets/<int:diet_id>/save/', views.save_diet, name='save_diet'),
+    path('diets/<int:diet_id>/remove/', views.remove_diet, name='remove_diet'),
+    path('add-plans/', views.add_plans, name='add_plans'),
+    path('saved-plans/', views.saved_plans, name='saved_plans'),
+
 
     path('guest_home/', views.guest_home, name='guest_home'),
     path('guest_workouts/', views.guest_workouts, name='guest_workouts'),
@@ -61,6 +70,7 @@ urlpatterns = [
          subject_template_name='registration/password_reset_subject.txt'
      ),
      name='reset_password'),
+
      path('reset/<uidb64>/<token>/', auth_views.PasswordResetConfirmView.as_view(
         template_name='registration/password_reset_confirm.html'
     ), name='password_reset_confirm'),
